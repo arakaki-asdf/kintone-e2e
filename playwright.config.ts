@@ -1,12 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+// パスを省略するとカレントディレクトリの.envが読み込まれる
+process.loadEnvFile();
 
 export default defineConfig({
   testDir: './tests',
@@ -17,7 +12,7 @@ export default defineConfig({
   reporter: 'html',
 
   use: {
-    baseURL: 'http://xxxx.cybozu.com',
+    baseURL: process.env.KINTONE_BASE_URL,
     // 重要：Playwright独自のエージェントではなく、Mac内のGoogle Chromeを使う
     channel: 'chrome',
     // 動作確認のため、まずはブラウザを表示する設定
@@ -26,9 +21,19 @@ export default defineConfig({
   },
 
   projects: [
+    // 最初に走る認証セットアップ
+    { name: 'setup', testMatch: /.*\.setup\.ts/ },
+
+    // 実際のテスト（保存されたセッションを読み込んで、ログイン済み状態から始まる）
     {
-      name: 'Google Chrome',
-      use: { ...devices['Desktop Chrome'], channel: 'chrome' },
+      name: 'chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+        channel: 'chrome',
+        storageState: 'playwright/.auth/user.json',
+      },
+      dependencies: ['setup'],
+      testMatch: /.*\.spec.ts/,
     },
   ],
 
