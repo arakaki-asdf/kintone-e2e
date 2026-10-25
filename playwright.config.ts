@@ -22,7 +22,10 @@ export default defineConfig({
 
   projects: [
     // 最初に走る認証セットアップ
-    { name: 'setup', testMatch: /.*\.setup\.ts/ },
+    { 
+      name: 'setup',
+      testMatch: "auth.setup.ts",
+    },
 
     // 実際のテスト（保存されたセッションを読み込んで、ログイン済み状態から始まる）
     {

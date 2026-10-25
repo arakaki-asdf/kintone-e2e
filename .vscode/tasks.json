@@ -3,12 +3,12 @@
   "tasks": [
     {
       "type": "shell",
-      "label": "Playwright: Run Tests",
-      "command": "source ~/.zshrc && npx playwright test",
+      "label": "🎭 Playwright",
+      "command": "npx playwright test",
       "options": {
         "shell": {
-          "executable": "/bin/zsh",
-          "args": ["-l", "-c"]
+          "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
+          "args": ["--login", "-c"]
         }
       },
       "group": {
@@ -24,13 +24,13 @@
     },
     {
       "type": "shell",
-      "label": "Playwright: UI Mode (Interactive)",
-      "command": "source ~/.zshrc && npx playwright test --ui",
+      "label": "🎭 Playwright (UI)",
+      "command": "npx playwright test --ui",
       "options": {
         "shell": {
-          "executable": "/bin/zsh",
-          "args": [ "-l", "-c" ]
-        },
+          "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
+          "args": ["--login", "-c"]
+        }
       },
       "group": {
         "kind": "build",
